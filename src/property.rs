@@ -2,7 +2,7 @@ use chrono::NaiveDate;
 use std::ffi::CStr;
 use std::fmt;
 
-use super::icalcomponent::IcalComponent;
+use super::component::IcalComponent;
 use crate::ical;
 
 pub struct IcalProperty<'a> {

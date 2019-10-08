@@ -82,32 +82,13 @@ mod tests {
   }
 
   #[test]
-  fn test_local() {
-    testdata::setup();
-    let tz = IcalTimeZone::local();
-    assert_eq!("Europe/Berlin", tz.get_name());
-  }
-
-  #[test]
   fn test_get_offset_utc() {
-    testdata::setup();
     let tz = IcalTimeZone::utc();
     let time = IcalTime::utc();
 
     let offset = tz.get_offset_at_time(&time);
 
     assert_eq!(0, offset);
-  }
-
-  #[test]
-  fn test_get_offset_local() {
-    testdata::setup();
-    let time = IcalTime::utc();
-    let tz = IcalTimeZone::local();
-
-    let offset = tz.get_offset_at_time(&time);
-
-    assert_eq!(60*60, offset);
   }
 
   #[test]

@@ -125,7 +125,7 @@ impl IcalVEvent {
   }
 
   //TODO remove this function
-  pub(in crate::icalwrap) fn with_internal_timestamp(&self, _datetime: &IcalTime) -> IcalVEvent {
+  pub(crate) fn with_internal_timestamp(&self, _datetime: &IcalTime) -> IcalVEvent {
     IcalVEvent {
       ptr: self.ptr,
       parent: self.parent.as_ref().map(|parent| parent.shallow_copy()),

@@ -272,30 +272,3 @@ lazy_static! {
   pub static ref NOW_TEST: DateTime<Utc> = Utc.ymd(2013, 01, 01).and_hms(1, 2, 3);
 }
 
-#[cfg(test)]
-use std::sync::{Once, ONCE_INIT};
-#[cfg(test)]
-static INIT: Once = ONCE_INIT;
-/// Setup function that is only run once, even if called multiple times.
-#[cfg(test)]
-pub fn setup() {
-  use std::env;
-  INIT.call_once(|| {
-    env::set_var("TZ", "Europe/Berlin");
-  });
-  use yansi;
-  yansi::Paint::disable();
-}
-
-#[cfg(test)]
-use crate::icalwrap::IcalVCalendar;
-use crate::khevent::KhEvent;
-#[cfg(test)]
-use std::path::Path;
-#[cfg(test)]
-pub fn get_test_event(str: &str, path: Option<&Path>) -> KhEvent {
-  IcalVCalendar::from_str(str, path)
-    .map(|cal| cal.get_principal_khevent())
-    .unwrap()
-}
-

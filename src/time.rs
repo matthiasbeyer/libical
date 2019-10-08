@@ -239,7 +239,6 @@ mod tests {
 
   #[test]
   fn test_from_local() {
-    testdata::setup();
     let local_time = Local.ymd(2014, 01, 01).and_hms(01, 02, 03);
     let time = IcalTime::from(local_time);
 
@@ -249,7 +248,6 @@ mod tests {
 
   #[test]
   fn test_local() {
-    testdata::setup();
     let time = IcalTime::local();
     assert_eq!("20130101T020203", time.to_string());
   }
@@ -286,7 +284,6 @@ mod tests {
 
   #[test]
   fn test_from_local_date() {
-    testdata::setup();
     let local_date = Local.ymd(2014, 01, 01);
     let time = IcalTime::from(local_date);
 
@@ -319,7 +316,6 @@ mod tests {
 
   #[test]
   fn test_into_local_date() {
-    testdata::setup();
     let time = IcalTimeZone::local().ymd(2014, 02, 02);
     let date: Date<Local> = time.into();
     assert_eq!(Local.ymd(2014, 02, 02), date);
@@ -327,7 +323,6 @@ mod tests {
 
   #[test]
   fn test_into_local_datetime() {
-    testdata::setup();
     let time = IcalTimeZone::local().ymd(2014, 02, 02).and_hms(13, 37, 00);
     let datetime: DateTime<Local> = time.into();
     assert_eq!(Local.ymd(2014, 02, 02).and_hms(13, 37, 00), datetime);
@@ -335,7 +330,6 @@ mod tests {
 
   #[test]
   fn test_into_local_datetime_utc() {
-    testdata::setup();
     let time = IcalTimeZone::utc().ymd(2014, 02, 02).and_hms(13, 37, 00);
     let datetime: DateTime<Local> = time.into();
     assert_eq!(Local.ymd(2014, 02, 02).and_hms(14, 37, 00), datetime);

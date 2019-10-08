@@ -4,7 +4,7 @@ use std::path::{Path, PathBuf};
 use std::{fs, io};
 use std::fs::OpenOptions;
 
-use crate::icalwrap::IcalVCalendar;
+use crate::IcalVCalendar;
 
 pub fn file_iter(dir: &Path) -> impl Iterator<Item = PathBuf> {
   use walkdir::WalkDir;
@@ -43,13 +43,6 @@ pub fn append_file(filepath: &Path, contents: &str) -> io::Result<()> {
   file.write_all(contents.as_bytes())
 }
 
-pub fn write_cal(cal: &IcalVCalendar) -> io::Result<()> {
-  match cal.get_path() {
-    Some(path) => write_file(&path, &cal.to_string()),
-    None => Err(io::Error::new(io::ErrorKind::Other, "calendar has no path")),
-  }
-}
-
 pub fn read_lines_from_file(filepath: &Path) -> io::Result<impl DoubleEndedIterator<Item = String>> {
   let f = fs::File::open(filepath)?;
   let f = BufReader::new(f);
@@ -64,34 +57,3 @@ pub fn read_file_to_string(path: &Path) -> io::Result<String> {
   Ok(contents)
 }
 
-#[cfg(test)]
-mod tests {
-  use super::*;
-
-  use crate::testutils::prepare_testdir;
-  use assert_fs::prelude::*;
-
-  #[test]
-  fn test_append_file() {
-    let testdir = prepare_testdir("testdir");
-    let file = testdir.child("f");
-
-    append_file(file.path(), "x\ny\n").unwrap();
-    file.assert("x\ny\n");
-
-    append_file(file.path(), "z\n").unwrap();
-    file.assert("x\ny\nz\n");
-  }
-
-  #[test]
-  fn test_write_file() {
-    let testdir = prepare_testdir("testdir");
-    let file = testdir.child("f");
-
-    write_file(file.path(), "x\ny\n").unwrap();
-    file.assert("x\ny\n");
-
-    write_file(file.path(), "z\n").unwrap();
-    file.assert("z\n");
-  }
-}

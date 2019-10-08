@@ -1,7 +1,6 @@
 use std::ffi::CString;
 
 use super::IcalProperty;
-use crate::ical;
 
 pub trait IcalComponent {
   fn get_ptr(&self) -> *mut ical::icalcomponent;
@@ -78,7 +77,7 @@ pub trait IcalComponent {
 mod tests {
   use super::*;
   use crate::testdata;
-  use crate::icalwrap::IcalVCalendar;
+  use crate::IcalVCalendar;
 
   #[test]
   fn get_property_test() {

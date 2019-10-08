@@ -6,8 +6,6 @@ use std::rc::Rc;
 use super::IcalComponent;
 use super::IcalTime;
 use super::IcalVEvent;
-use crate::ical;
-use crate::khevent::KhEvent;
 
 pub struct IcalVCalendar {
   comp: Rc<IcalComponentOwner>,
@@ -283,16 +281,12 @@ impl IcalVCalendar {
     IcalVEvent::from_ptr_with_parent(event, self)
   }
 
-  pub(in crate::icalwrap) fn get_principal_event(&self) -> IcalVEvent {
+  pub(crate) fn get_principal_event(&self) -> IcalVEvent {
     let mut event = self.get_first_event();
     if let Some(ref timestamp) = self.instance_timestamp {
       event = event.with_internal_timestamp(timestamp)
     }
     event
-  }
-
-  pub fn get_principal_khevent(&self) -> KhEvent {
-    KhEvent::from_event_with_timestamp(self.get_first_event(), self.instance_timestamp.clone())
   }
 
   pub fn check_for_errors(&self) -> Option<Vec<String>> {
@@ -531,64 +525,6 @@ mod tests {
 
     let event = new_cal.get_principal_event();
     assert_eq!(location, event.get_location().unwrap())
-  }
-
-  #[test]
-  fn test_with_summary() {
-    let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
-
-    let summary = "test";
-    let new_cal = cal.with_summary(summary);
-
-    let event = new_cal.get_principal_khevent();
-    assert_eq!(summary, event.get_summary().unwrap())
-  }
-
-  #[test]
-  fn test_with_dtend() {
-    testdata::setup();
-    let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
-
-    let timestamp = IcalTime::floating_ymd(2018, 1, 1).and_hms(11, 30, 20);
-    let new_cal = cal.with_dtend(&timestamp);
-
-    let event = new_cal.get_principal_khevent();
-    assert_eq!(timestamp, event.get_end().unwrap())
-  }
-
-  #[test]
-  fn test_with_dtstart() {
-    testdata::setup();
-    let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
-
-    let timestamp = IcalTime::floating_ymd(2018, 1, 1).and_hms(11, 30, 20);
-    let new_cal = cal.with_dtstart(&timestamp);
-
-    let event = new_cal.get_principal_khevent();
-    assert_eq!(timestamp, event.get_start().unwrap())
-  }
-
-  #[test]
-  fn test_with_dtstart_timezone() {
-    testdata::setup();
-    let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
-
-    let local_date = Local.ymd(2018, 1, 1).and_hms(11, 30, 20);
-    let timestamp = IcalTime::from(local_date);
-
-    let new_cal = cal.with_dtstart(&timestamp);
-
-    let event = new_cal.get_principal_khevent();
-    assert_eq!(timestamp, event.get_start().unwrap());
-    assert_eq!(
-      "Europe/Berlin",
-      event
-        .get_start()
-        .unwrap()
-        .get_timezone()
-        .unwrap()
-        .get_name()
-    );
   }
 
   //#[test]

@@ -83,8 +83,6 @@ pub fn datetime_from_timestamp(timestamp: &str) -> Option<DateTime<Local>> {
 mod tests {
   use super::*;
 
-  use crate::testdata;
-
   #[test]
   fn test_date_from_str() {
     let date = date_from_str("2018-12-10").unwrap();
@@ -150,8 +148,6 @@ mod tests {
 
   #[test]
   fn test_find_local_timezone() {
-    testdata::setup();
-
     let tz_name = find_local_timezone();
     assert_eq!("Europe/Berlin", tz_name);
   }
