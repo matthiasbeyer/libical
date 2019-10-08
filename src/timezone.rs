@@ -70,8 +70,6 @@ impl IcalTimeZone {
 mod tests {
     use super::*;
 
-    use crate::testdata;
-
     #[test]
     fn test_utc() {
         let tz = IcalTimeZone::utc();

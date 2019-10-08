@@ -1,7 +1,6 @@
 use assert_fs::fixture::{ChildPath, FixtureError};
 use assert_fs::prelude::*;
 use assert_fs::TempDir;
-use std::fs;
 use std::path::{Path, PathBuf};
 
 pub fn path_to(artifact: &str) -> PathBuf {

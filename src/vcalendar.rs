@@ -407,7 +407,6 @@ impl Drop for IcalComponentOwner {
 mod tests {
     use super::*;
     use crate::testdata;
-    use chrono::{Local, TimeZone};
 
     #[test]
     fn test_from_str_empty() {

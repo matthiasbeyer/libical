@@ -225,8 +225,6 @@ impl From<IcalTime> for DateTime<Utc> {
 mod tests {
     use super::*;
 
-    use crate::testdata;
-
     #[test]
     fn test_now() {
         let now = IcalTime::utc();

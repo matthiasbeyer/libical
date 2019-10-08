@@ -1,21 +1,19 @@
+#![warn(unused_extern_crates)]
 #![allow(clippy::redundant_closure)] // disable "redundant closure" lint
 
 #[cfg(test)]
 #[macro_use]
-extern crate maplit;
-#[cfg(test)]
-#[macro_use]
 extern crate pretty_assertions;
+
 #[cfg(test)]
 #[macro_use]
 extern crate indoc;
 
-extern crate serde_derive;
 #[macro_use]
 extern crate log;
 #[macro_use]
 extern crate lazy_static;
-extern crate ical;
+use ical; // extern crate
 
 // libical does some weird, non-threadsafe things in timezone methods, notably
 // icaltime_convert_to_zone (which is also called in icaltime_as_timet_with_zone)

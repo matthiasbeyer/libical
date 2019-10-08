@@ -4,8 +4,6 @@ use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::{fs, io};
 
-use crate::IcalVCalendar;
-
 pub fn file_iter(dir: &Path) -> impl Iterator<Item = PathBuf> {
     use walkdir::WalkDir;
 

@@ -21,7 +21,6 @@ walkdir      = "2.2.7"
 ical         = { package = "libical-sys", version = "0.1.1" }
 toml         = "0.5.0"
 serde        = "1.0.82"
-serde_derive = "1.0.82"
 tempfile     = "3.0.5"
 uuid         = { version = "0.7", features        = ["v4"] }
 fs2          = "0.4.3"
