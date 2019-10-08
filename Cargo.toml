@@ -6,7 +6,12 @@ authors = [
     "Vincent Breitmoser <look@my.amazin.horse>",
     "Matthias Beyer <mail@beyermatthias.de>"]
 
-edition = "2018"
+description = "Wrapping library around libical-sys"
+keywords    = ["ical", "icalendar", "calendar"]
+categories  = ["api-bindings"]
+readme      = "./README.md"
+license     = "GPL-2.0"
+edition     = "2018"
 
 [dependencies]
 libc         = "0.2.43"
