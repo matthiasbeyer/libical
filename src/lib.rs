@@ -1,12 +1,20 @@
 #![allow(clippy::redundant_closure)] // disable "redundant closure" lint
 
-#[cfg(test)] #[macro_use] extern crate maplit;
-#[cfg(test)] #[macro_use] extern crate pretty_assertions;
-#[cfg(test)] #[macro_use] extern crate indoc;
+#[cfg(test)]
+#[macro_use]
+extern crate maplit;
+#[cfg(test)]
+#[macro_use]
+extern crate pretty_assertions;
+#[cfg(test)]
+#[macro_use]
+extern crate indoc;
 
 extern crate serde_derive;
-#[macro_use] extern crate log;
-#[macro_use] extern crate lazy_static;
+#[macro_use]
+extern crate log;
+#[macro_use]
+extern crate lazy_static;
 extern crate ical;
 
 // libical does some weird, non-threadsafe things in timezone methods, notably
@@ -16,18 +24,18 @@ extern crate ical;
 // https://github.com/libical/libical/commit/0ebf2d9a7183be94991c2681c6e3f009c64cf7cc
 use std::sync::Mutex;
 lazy_static! {
-  static ref TZ_MUTEX: Mutex<i32> = Mutex::new(0);
+    static ref TZ_MUTEX: Mutex<i32> = Mutex::new(0);
 }
 
-pub mod errors;
 pub mod component;
 pub mod duration;
+pub mod errors;
 pub mod property;
 pub mod time;
 pub mod timezone;
+pub mod utils;
 pub mod vcalendar;
 pub mod vevent;
-pub mod utils;
 
 #[cfg(test)]
 pub mod testdata;
@@ -43,4 +51,3 @@ pub use crate::timezone::IcalTimeZone;
 pub use crate::vcalendar::IcalEventIter;
 pub use crate::vcalendar::IcalVCalendar;
 pub use crate::vevent::IcalVEvent;
-
