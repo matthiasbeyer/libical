@@ -29,7 +29,6 @@ lazy_static! {
 
 pub mod component;
 pub mod duration;
-pub mod errors;
 pub mod property;
 pub mod time;
 pub mod timezone;
