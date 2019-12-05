@@ -10,7 +10,7 @@ description = "Wrapping library around libical-sys"
 keywords    = ["ical", "icalendar", "calendar"]
 categories  = ["api-bindings"]
 readme      = "./README.md"
-license     = "GPL-2.0"
+license     = "LGPL-2.1 OR MPL-2.0"
 edition     = "2018"
 
 [dependencies]
