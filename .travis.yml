@@ -3,6 +3,7 @@ matrix:
     - language: nix
       script:
         - nix-shell --pure --run "cargo build --all --all-features"
+        - nix-shell --pure --run "cargo test --all --all-features"
 
 jobs:
   allow_failures:
