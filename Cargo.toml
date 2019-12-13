@@ -1,34 +1,40 @@
 [package]
-name = "khaleesi"
+name = "libical"
 version = "0.1.0"
-authors = ["Nora <nora.widdecke@tu-bs.de>"]
-edition = "2018"
+authors = [
+    "Nora <nora.widdecke@tu-bs.de>",
+    "Vincent Breitmoser <look@my.amazin.horse>",
+    "Matthias Beyer <mail@beyermatthias.de>"]
+
+description = "Wrapping library around libical-sys"
+keywords    = ["ical", "icalendar", "calendar"]
+categories  = ["api-bindings"]
+readme      = "./README.md"
+license     = "LGPL-2.1 OR MPL-2.0"
+edition     = "2018"
 
 [dependencies]
-libc = "0.2.43"
-chrono = "0.4"
-itertools = "0.8.0"
-log = "0.4.5"
-yansi = "0.5.0"
-indoc = "0.3.1"
-stderrlog = "0.4"
-atty = "0.2"
-walkdir = "2.2.7"
-ical = { package = "libical-sys", version = "0.1.1" }
-toml = "0.5.0"
-serde = "1.0.82"
-serde_derive = "1.0.82"
-tempfile = "3.0.5"
-uuid = { version = "0.7", features = ["v4"] }
-fs2 = "0.4.3"
-lazy_static = "1.2.0"
-backtrace = "0.3"
-dirs = "2.0.0"
-structopt = "0.2.14"
-clap = "2.32.0"
+libc         = "0.2.43"
+chrono       = "0.4"
+itertools    = "0.8.0"
+log          = "0.4.5"
+yansi        = "0.5.0"
+indoc        = "0.3.1"
+stderrlog    = "0.4"
+atty         = "0.2"
+walkdir      = "2.2.7"
+ical         = { package = "libical-sys", version = "0.1.1" }
+toml         = "0.5.0"
+serde        = "1.0.82"
+tempfile     = "3.0.5"
+uuid         = { version = "0.7", features        = ["v4"] }
+fs2          = "0.4.3"
+lazy_static  = "1.2.0"
+backtrace    = "0.3"
+dirs         = "2.0.0"
 
 [dev-dependencies]
-assert_fs = "0.11.3"
-predicates = "1.0"
-maplit = "1.0.1"
+assert_fs         = "0.11.3"
+predicates        = "1.0"
+maplit            = "1.0.1"
 pretty_assertions = "0.6.1"

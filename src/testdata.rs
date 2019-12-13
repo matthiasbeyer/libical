@@ -1,5 +1,6 @@
 // from https://tools.ietf.org/html/rfc5545#section-3.6.1
-pub static TEST_EVENT_MULTIDAY_ALLDAY: &str = indoc!("
+pub static TEST_EVENT_MULTIDAY_ALLDAY: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -13,9 +14,11 @@ pub static TEST_EVENT_MULTIDAY_ALLDAY: &str = indoc!("
     TRANSP:TRANSPARENT
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_EVENT_MULTIDAY: &str = indoc!("
+pub static TEST_EVENT_MULTIDAY: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -29,9 +32,11 @@ pub static TEST_EVENT_MULTIDAY: &str = indoc!("
     TRANSP:TRANSPARENT
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_EVENT_MULTIDAY_LASTMODIFIED: &str = indoc!("
+pub static TEST_EVENT_MULTIDAY_LASTMODIFIED: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -46,9 +51,11 @@ pub static TEST_EVENT_MULTIDAY_LASTMODIFIED: &str = indoc!("
     TRANSP:TRANSPARENT
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_DTSTART_ONLY_DATE: &str = indoc!("
+pub static TEST_DTSTART_ONLY_DATE: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -61,9 +68,11 @@ pub static TEST_DTSTART_ONLY_DATE: &str = indoc!("
     TRANSP:TRANSPARENT
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_DTSTART_ONLY_DATETIME: &str = indoc!("
+pub static TEST_DTSTART_ONLY_DATETIME: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -76,9 +85,11 @@ pub static TEST_DTSTART_ONLY_DATETIME: &str = indoc!("
     TRANSP:TRANSPARENT
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_EVENT_EMPTY_SUMMARY: &str = indoc!("
+pub static TEST_EVENT_EMPTY_SUMMARY: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -92,9 +103,11 @@ pub static TEST_EVENT_EMPTY_SUMMARY: &str = indoc!("
     TRANSP:TRANSPARENT
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_EVENT_NO_UID: &str = indoc!("
+pub static TEST_EVENT_NO_UID: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -107,9 +120,11 @@ pub static TEST_EVENT_NO_UID: &str = indoc!("
     TRANSP:TRANSPARENT
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_EVENT_NO_PRODID: &str = indoc!("
+pub static TEST_EVENT_NO_PRODID: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     BEGIN:VEVENT
@@ -122,10 +137,12 @@ pub static TEST_EVENT_NO_PRODID: &str = indoc!("
     TRANSP:TRANSPARENT
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
 // from https://tools.ietf.org/html/rfc5545#section-4
-pub static TEST_EVENT_ONE_MEETING: &str = indoc!(r"
+pub static TEST_EVENT_ONE_MEETING: &str = indoc!(
+    r"
     BEGIN:VCALENDAR
     METHOD:xyz
     VERSION:2.0
@@ -148,9 +165,11 @@ pub static TEST_EVENT_ONE_MEETING: &str = indoc!(r"
     END:VEVENT
     END:VCALENDAR
 
-");
+"
+);
 
-pub static TEST_EVENT_RECUR: &str = indoc!("
+pub static TEST_EVENT_RECUR: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -163,10 +182,11 @@ pub static TEST_EVENT_RECUR: &str = indoc!("
     END:VEVENT
     END:VCALENDAR
 
-");
+"
+);
 
-
-pub static TEST_EVENT_WITH_TIMEZONE_COMPONENT: &str = indoc!("
+pub static TEST_EVENT_WITH_TIMEZONE_COMPONENT: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//PIMUTILS.ORG//NONSGML khal / icalendar //EN
@@ -195,9 +215,11 @@ pub static TEST_EVENT_WITH_TIMEZONE_COMPONENT: &str = indoc!("
     LOCATION:Some Location
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_MULTIPLE_EVENTS: &str = indoc!("
+pub static TEST_MULTIPLE_EVENTS: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -214,9 +236,11 @@ pub static TEST_MULTIPLE_EVENTS: &str = indoc!("
     SUMMARY:Second Event
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_NO_DTSTART: &str = indoc!("
+pub static TEST_NO_DTSTART: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -225,9 +249,11 @@ pub static TEST_NO_DTSTART: &str = indoc!("
     DTSTAMP:20070423T123432Z
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_NO_SUMMARY: &str = indoc!("
+pub static TEST_NO_SUMMARY: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     VERSION:2.0
     PRODID:-//ABC Corporation//NONSGML My Product//EN
@@ -237,17 +263,21 @@ pub static TEST_NO_SUMMARY: &str = indoc!("
     DTSTART;VALUE=DATE:20070628
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-pub static TEST_BARE_EVENT: &str = indoc!("
+pub static TEST_BARE_EVENT: &str = indoc!(
+    "
     BEGIN:VEVENT
     UID:uid4
     DTSTAMP:20070423T123432Z
     DTSTART;VALUE=DATE:20070628
     END:VEVENT
-");
+"
+);
 
-pub static TEST_EVENT_WITH_X_LIC_ERROR: &str = indoc!("
+pub static TEST_EVENT_WITH_X_LIC_ERROR: &str = indoc!(
+    "
     BEGIN:VCALENDAR
     PRODID:CommuniGate Pro 6.2.5
     VERSION:2.0
@@ -265,37 +295,10 @@ pub static TEST_EVENT_WITH_X_LIC_ERROR: &str = indoc!("
     X-LIC-ERROR:No value for LOCATION property. Removing entire property:
     END:VEVENT
     END:VCALENDAR
-");
+"
+);
 
-use chrono::{Utc,DateTime,TimeZone};
+use chrono::{DateTime, TimeZone, Utc};
 lazy_static! {
-  pub static ref NOW_TEST: DateTime<Utc> = Utc.ymd(2013, 01, 01).and_hms(1, 2, 3);
+    pub static ref NOW_TEST: DateTime<Utc> = Utc.ymd(2013, 01, 01).and_hms(1, 2, 3);
 }
-
-#[cfg(test)]
-use std::sync::{Once, ONCE_INIT};
-#[cfg(test)]
-static INIT: Once = ONCE_INIT;
-/// Setup function that is only run once, even if called multiple times.
-#[cfg(test)]
-pub fn setup() {
-  use std::env;
-  INIT.call_once(|| {
-    env::set_var("TZ", "Europe/Berlin");
-  });
-  use yansi;
-  yansi::Paint::disable();
-}
-
-#[cfg(test)]
-use crate::icalwrap::IcalVCalendar;
-use crate::khevent::KhEvent;
-#[cfg(test)]
-use std::path::Path;
-#[cfg(test)]
-pub fn get_test_event(str: &str, path: Option<&Path>) -> KhEvent {
-  IcalVCalendar::from_str(str, path)
-    .map(|cal| cal.get_principal_khevent())
-    .unwrap()
-}
-

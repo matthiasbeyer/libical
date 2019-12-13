@@ -1,4 +1,0 @@
-#!/bin/zsh
-
-echo cargo run -- ${${0:t}[3,$]} "$@" >&2
-cargo run -- ${${0:t}[3,$]} "$@"
