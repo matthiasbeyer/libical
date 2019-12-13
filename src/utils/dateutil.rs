@@ -149,10 +149,4 @@ mod tests {
         let dt = Utc.ymd(2019, 01, 11).and_hms(19, 24, 47);
         assert_eq!(dt, dt_from_ts);
     }
-
-    #[test]
-    fn test_find_local_timezone() {
-        let tz_name = find_local_timezone();
-        assert_eq!("Europe/Berlin", tz_name);
-    }
 }

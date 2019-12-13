@@ -226,29 +226,6 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_now() {
-        let now = IcalTime::utc();
-
-        assert_eq!("20130101T010203Z", now.to_string());
-        assert_eq!(1357002123, now.timestamp());
-    }
-
-    #[test]
-    fn test_from_local() {
-        let local_time = Local.ymd(2014, 01, 01).and_hms(01, 02, 03);
-        let time = IcalTime::from(local_time);
-
-        assert_eq!("Europe/Berlin", time.get_timezone().unwrap().get_name());
-        assert_eq!(1388534523, time.timestamp());
-    }
-
-    #[test]
-    fn test_local() {
-        let time = IcalTime::local();
-        assert_eq!("20130101T020203", time.to_string());
-    }
-
-    #[test]
     fn test_parse() {
         let time = "20130101T010203Z".parse::<IcalTime>().unwrap();
         assert_eq!("20130101T010203Z", time.to_string());
@@ -279,15 +256,6 @@ mod tests {
     }
 
     #[test]
-    fn test_from_local_date() {
-        let local_date = Local.ymd(2014, 01, 01);
-        let time = IcalTime::from(local_date);
-
-        assert_eq!("Europe/Berlin", time.get_timezone().unwrap().get_name());
-        assert_eq!("20140101", time.to_string());
-    }
-
-    #[test]
     fn test_from_utc_date() {
         let utc_date = Utc.ymd(2014, 01, 01);
         let time = IcalTime::from(utc_date);
@@ -308,27 +276,6 @@ mod tests {
         let time = IcalTimeZone::utc().ymd(2014, 02, 02).and_hms(13, 37, 00);
         let datetime: DateTime<Utc> = time.into();
         assert_eq!(Utc.ymd(2014, 02, 02).and_hms(13, 37, 00), datetime);
-    }
-
-    #[test]
-    fn test_into_local_date() {
-        let time = IcalTimeZone::local().ymd(2014, 02, 02);
-        let date: Date<Local> = time.into();
-        assert_eq!(Local.ymd(2014, 02, 02), date);
-    }
-
-    #[test]
-    fn test_into_local_datetime() {
-        let time = IcalTimeZone::local().ymd(2014, 02, 02).and_hms(13, 37, 00);
-        let datetime: DateTime<Local> = time.into();
-        assert_eq!(Local.ymd(2014, 02, 02).and_hms(13, 37, 00), datetime);
-    }
-
-    #[test]
-    fn test_into_local_datetime_utc() {
-        let time = IcalTimeZone::utc().ymd(2014, 02, 02).and_hms(13, 37, 00);
-        let datetime: DateTime<Local> = time.into();
-        assert_eq!(Local.ymd(2014, 02, 02).and_hms(14, 37, 00), datetime);
     }
 
     #[test]
