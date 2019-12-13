@@ -6,12 +6,10 @@ matrix:
         - nix-shell --pure --run "cargo test --all --all-features"
 
 jobs:
-  allow_failures:
-    - rust: nightly
   fast_finish: true
 
 notifications:
   email:
-    on_success: always
+    on_success: never
     on_failure: always
 
