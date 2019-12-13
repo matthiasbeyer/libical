@@ -21,12 +21,12 @@ indoc        = "0.3.1"
 atty         = "0.2"
 walkdir      = "2.2.7"
 ical         = { package = "libical-sys", version = "0.1.1" }
-uuid         = { version = "0.7", features        = ["v4"] }
+uuid         = { version = "0.8", features = ["v4"] }
 fs2          = "0.4.3"
 lazy_static  = "1.2.0"
 
 [dev-dependencies]
-assert_fs         = "0.11.3"
+assert_fs         = "0.13.1"
 predicates        = "1.0"
 maplit            = "1.0.1"
 pretty_assertions = "0.6.1"
