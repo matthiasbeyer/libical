@@ -20,7 +20,6 @@ itertools    = "0.8.0"
 log          = "0.4.5"
 yansi        = "0.5.0"
 indoc        = "0.3.1"
-stderrlog    = "0.4"
 atty         = "0.2"
 walkdir      = "2.2.7"
 ical         = { package = "libical-sys", version = "0.1.1" }
