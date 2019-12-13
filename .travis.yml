@@ -5,8 +5,6 @@ matrix:
         - nix-shell --pure --run "cargo build --all --all-features"
 
 jobs:
-  allow_failures:
-    - rust: nightly
   fast_finish: true
 
 notifications:
