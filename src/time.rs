@@ -35,6 +35,7 @@ impl IcalTime {
             is_daylight: 0,
             zone: ::std::ptr::null(),
         };
+        let time = unsafe { ical::icaltime_normalize(time) };
         IcalTime { time }
     }
 
@@ -44,6 +45,8 @@ impl IcalTime {
         time.minute = minute;
         time.second = second;
         time.is_date = 0;
+
+        let time = unsafe { ical::icaltime_normalize(time) };
 
         IcalTime { time }
     }
@@ -298,5 +301,35 @@ mod tests {
     fn test_succ() {
         let time = IcalTime::utc();
         assert_eq!("20130102T010203Z", time.succ().to_string());
+    }
+
+    #[test]
+    fn test_invalid_month() {
+        let time = IcalTime::floating_ymd(2000, 13, 1);
+        assert_eq!("20010101", time.to_string());
+    }
+
+    #[test]
+    fn test_invalid_day() {
+        let time = IcalTime::floating_ymd(2000, 12, 32);
+        assert_eq!("20010101", time.to_string());
+    }
+
+    #[test]
+    fn test_invalid_hour() {
+        let time = IcalTime::floating_ymd(2000, 12, 31).and_hms(25, 0, 0);
+        assert_eq!("20010101T010000", time.to_string());
+    }
+
+    #[test]
+    fn test_invalid_minute() {
+        let time = IcalTime::floating_ymd(2000, 12, 31).and_hms(24, 61, 0);
+        assert_eq!("20010101T010100", time.to_string());
+    }
+
+    #[test]
+    fn test_invalid_second() {
+        let time = IcalTime::floating_ymd(2000, 12, 31).and_hms(24, 60, 61);
+        assert_eq!("20010101T010101", time.to_string());
     }
 }
