@@ -91,7 +91,7 @@ impl IcalVCalendar {
         }
     }
 
-    pub fn with_normalize(self) -> Self {
+    pub fn normalized(self) -> Self {
         unsafe {
             ical::icalcomponent_normalize(self.get_ptr());
         }
