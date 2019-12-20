@@ -2,6 +2,7 @@ use std::ffi::{CStr, CString};
 use std::io;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
+use std::string::ToString;
 
 use super::IcalComponent;
 use super::IcalTime;
@@ -91,18 +92,11 @@ impl IcalVCalendar {
         }
     }
 
-    pub fn with_normalize(self) -> Self {
+    pub fn normalized(self) -> Self {
         unsafe {
             ical::icalcomponent_normalize(self.get_ptr());
         }
         self
-    }
-
-    pub fn to_string(&self) -> String {
-        unsafe {
-            let ical_cstr = CStr::from_ptr(ical::icalcomponent_as_ical_string(self.get_ptr()));
-            ical_cstr.to_string_lossy().into_owned()
-        }
     }
 
     pub fn get_uid(&self) -> String {
@@ -358,6 +352,15 @@ impl IcalVCalendar {
     }
 }
 
+impl ToString for IcalVCalendar {
+    fn to_string(&self) -> String {
+        unsafe {
+            let ical_cstr = CStr::from_ptr(ical::icalcomponent_as_ical_string(self.get_ptr()));
+            ical_cstr.to_string_lossy().into_owned()
+        }
+    }
+}
+
 impl<'a> IcalEventIter<'a> {
     fn from_vcalendar(cal: &'a IcalVCalendar) -> Self {
         let vevent_kind = ical::icalcomponent_kind_ICAL_VEVENT_COMPONENT;
@@ -406,7 +409,7 @@ impl Drop for IcalComponentOwner {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::testdata;
+    use crate::testing;
 
     #[test]
     fn test_from_str_empty() {
@@ -415,39 +418,39 @@ mod tests {
 
     #[test]
     fn test_from_str_event() {
-        assert!(IcalVCalendar::from_str(testdata::TEST_BARE_EVENT, None).is_err());
+        assert!(IcalVCalendar::from_str(testing::data::TEST_BARE_EVENT, None).is_err());
     }
 
     #[test]
     fn event_iterator_element_count() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         assert_eq!(cal.events_iter().count(), 1)
     }
 
     #[test]
     fn event_iterator_element_count_with_other() {
         let cal =
-            IcalVCalendar::from_str(testdata::TEST_EVENT_WITH_TIMEZONE_COMPONENT, None).unwrap();
+            IcalVCalendar::from_str(testing::data::TEST_EVENT_WITH_TIMEZONE_COMPONENT, None).unwrap();
         assert_eq!(cal.events_iter().count(), 1)
     }
 
     #[test]
     fn load_serialize() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         let back = cal.to_string().replace("\r\n", "\n");
-        assert_eq!(back.trim(), testdata::TEST_EVENT_MULTIDAY)
+        assert_eq!(back.trim(), testing::data::TEST_EVENT_MULTIDAY)
     }
 
     #[test]
     fn load_serialize_with_error() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_WITH_X_LIC_ERROR, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_WITH_X_LIC_ERROR, None).unwrap();
         let back = cal.to_string().replace("\r\n", "\n");
-        assert_eq!(back.trim(), testdata::TEST_EVENT_WITH_X_LIC_ERROR)
+        assert_eq!(back.trim(), testing::data::TEST_EVENT_WITH_X_LIC_ERROR)
     }
 
     #[test]
     fn with_dtstamp_test() {
-        let mut cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let mut cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         cal = cal.with_dtstamp_now();
         let event = cal.get_principal_event();
 
@@ -460,13 +463,13 @@ mod tests {
     fn get_calendar_name_test() {
         let path = PathBuf::from("calname/event");
         let cal =
-            IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY_ALLDAY, Some(&path)).unwrap();
+            IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY_ALLDAY, Some(&path)).unwrap();
         assert_eq!("calname".to_string(), cal.get_calendar_name().unwrap())
     }
 
     #[test]
     fn test_get_all_properties_cal() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
 
         let props = cal.get_properties_all();
         assert_eq!(2, props.len());
@@ -474,7 +477,7 @@ mod tests {
 
     #[test]
     fn parse_checker_test_empty_summary() {
-        let c_str = CString::new(testdata::TEST_EVENT_EMPTY_SUMMARY).unwrap();
+        let c_str = CString::new(testing::data::TEST_EVENT_EMPTY_SUMMARY).unwrap();
         unsafe {
             let parsed_cal = ical::icalparser_parse_string(c_str.as_ptr());
             assert!(IcalVCalendar::check_icalcomponent(parsed_cal).is_some())
@@ -483,7 +486,7 @@ mod tests {
 
     #[test]
     fn parse_checker_test_no_uid() {
-        let c_str = CString::new(testdata::TEST_EVENT_NO_UID).unwrap();
+        let c_str = CString::new(testing::data::TEST_EVENT_NO_UID).unwrap();
         unsafe {
             let parsed_cal = ical::icalparser_parse_string(c_str.as_ptr());
             assert!(IcalVCalendar::check_icalcomponent(parsed_cal).is_some())
@@ -492,7 +495,7 @@ mod tests {
 
     #[test]
     fn parse_checker_test_no_prodid() {
-        let c_str = CString::new(testdata::TEST_EVENT_NO_PRODID).unwrap();
+        let c_str = CString::new(testing::data::TEST_EVENT_NO_PRODID).unwrap();
         unsafe {
             let parsed_cal = ical::icalparser_parse_string(c_str.as_ptr());
             assert!(IcalVCalendar::check_icalcomponent(parsed_cal).is_some())
@@ -502,7 +505,7 @@ mod tests {
     #[test]
     fn test_with_last_modified_now() {
         let cal =
-            IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY_LASTMODIFIED, None).unwrap();
+            IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY_LASTMODIFIED, None).unwrap();
 
         let new_cal = cal.with_last_modified_now();
         let event = new_cal.get_principal_event();
@@ -516,7 +519,7 @@ mod tests {
 
     #[test]
     fn test_with_last_modified_now_added() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
 
         let new_cal = cal.with_last_modified_now();
         let event = new_cal.get_principal_event();
@@ -530,7 +533,7 @@ mod tests {
 
     #[test]
     fn test_with_location() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
 
         let location = "test";
         let new_cal = cal.with_location(location);
@@ -541,7 +544,7 @@ mod tests {
 
     //#[test]
     //fn test_with_internal_timestamp() {
-    //let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+    //let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
     //
     //let timestamp = IcalTime::floating_ymd(2018, 1, 1).and_hms(11, 30, 20);
     //let new_cal = cal.with_internal_timestamp(&timestamp);
@@ -553,7 +556,7 @@ mod tests {
     #[test]
     fn with_uid_test() {
         let path = PathBuf::from("test/path");
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, Some(&path)).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, Some(&path)).unwrap();
 
         let uid = "my_new_uid";
         let new_cal = cal.with_uid(uid).unwrap();
@@ -570,7 +573,7 @@ mod tests {
     #[test]
     fn with_uid_multiple_test() {
         let path = PathBuf::from("test/path");
-        let cal = IcalVCalendar::from_str(testdata::TEST_MULTIPLE_EVENTS, Some(&path)).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_MULTIPLE_EVENTS, Some(&path)).unwrap();
 
         let uid = "my_new_uid";
         let new_cal = cal.with_uid(uid);
@@ -581,7 +584,7 @@ mod tests {
     #[test]
     fn with_keep_uid_test() {
         let path = PathBuf::from("test/path");
-        let cal = IcalVCalendar::from_str(testdata::TEST_MULTIPLE_EVENTS, Some(&path)).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_MULTIPLE_EVENTS, Some(&path)).unwrap();
 
         for uid in &["uid1", "uid2"] {
             let new_cal = cal.clone().with_keep_uid(uid);
@@ -595,7 +598,7 @@ mod tests {
     #[test]
     fn clone_test() {
         let path = PathBuf::from("test/path");
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, Some(&path)).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, Some(&path)).unwrap();
         let cal2 = cal.clone().with_uid("my_new_uid").unwrap();
 
         assert_ne!(cal.get_uid(), cal2.get_uid());
@@ -603,7 +606,7 @@ mod tests {
 
     #[test]
     fn parse_checker_test_negative() {
-        let c_str = CString::new(testdata::TEST_EVENT_NO_PRODID).unwrap();
+        let c_str = CString::new(testing::data::TEST_EVENT_NO_PRODID).unwrap();
         unsafe {
             let parsed_cal = ical::icalparser_parse_string(c_str.as_ptr());
             assert!(IcalVCalendar::check_icalcomponent(parsed_cal).is_some())
@@ -612,7 +615,7 @@ mod tests {
 
     #[test]
     fn parse_checker_test() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         assert!(cal.check_for_errors().is_none());
     }
 }

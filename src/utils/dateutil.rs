@@ -4,7 +4,7 @@ use crate::utils::fileutil;
 use std::env;
 use std::path::PathBuf;
 
-pub fn date_from_str(date_str: &str) -> ParseResult<Date<Local>> {
+fn date_from_str(date_str: &str) -> ParseResult<Date<Local>> {
     if date_str == "today" || date_str == "now" {
         return Ok(Local::now().date());
     }
@@ -20,7 +20,7 @@ pub fn datetime_from_str(datetime_str: &str) -> ParseResult<DateTime<Local>> {
     Ok(Local.from_local_datetime(naive_datetime).unwrap())
 }
 
-pub fn week_from_str_begin(date_str: &str) -> Result<Date<Local>, String> {
+fn week_from_str_begin(date_str: &str) -> Result<Date<Local>, String> {
     let now = Local::now();
     if date_str == "toweek" || date_str == "thisweek" {
         return Ok(Local.isoywd(now.year(), now.iso_week().week(), Weekday::Mon));
@@ -56,11 +56,10 @@ pub fn now() -> DateTime<Utc> {
 
 #[cfg(test)]
 pub fn now() -> DateTime<Utc> {
-    use crate::testdata;
-    *testdata::NOW_TEST
+    *crate::testing::data::NOW_TEST
 }
 
-pub fn week_from_str_end(date_str: &str) -> Result<Date<Local>, String> {
+fn week_from_str_end(date_str: &str) -> Result<Date<Local>, String> {
     let now = Local::now();
     if date_str == "toweek" || date_str == "thisweek" {
         return Ok(Local.isoywd(now.year(), now.iso_week().week(), Weekday::Sun));
@@ -74,13 +73,6 @@ pub fn week_from_str_end(date_str: &str) -> Result<Date<Local>, String> {
         return Ok(Local.from_local_date(date).unwrap());
     }
     Err("Could not parse '{}' as week".to_string())
-}
-
-pub fn datetime_from_timestamp(timestamp: &str) -> Option<DateTime<Local>> {
-    let timestamp_i64 = timestamp.parse::<i64>().ok()?;
-    let naive_datetime = NaiveDateTime::from_timestamp_opt(timestamp_i64, 0)?;
-    let utc_time: DateTime<Utc> = DateTime::from_utc(naive_datetime, Utc);
-    Some(utc_time.with_timezone(&Local))
 }
 
 #[cfg(test)]
@@ -142,11 +134,4 @@ mod tests {
         week_from_str_end("nonsense").unwrap();
     }
 
-    #[test]
-    fn test_datetime_from_timestamp() {
-        let timestamp = "1547234687";
-        let dt_from_ts = datetime_from_timestamp(timestamp).unwrap();
-        let dt = Utc.ymd(2019, 01, 11).and_hms(19, 24, 47);
-        assert_eq!(dt, dt_from_ts);
-    }
 }

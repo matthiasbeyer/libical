@@ -38,15 +38,12 @@ pub mod duration;
 pub mod property;
 pub mod time;
 pub mod timezone;
-pub mod utils;
 pub mod vcalendar;
 pub mod vevent;
+mod utils;
 
 #[cfg(test)]
-pub mod testdata;
-
-#[cfg(test)]
-pub mod testutils;
+pub mod testing;
 
 pub use crate::component::IcalComponent;
 pub use crate::duration::IcalDuration;
