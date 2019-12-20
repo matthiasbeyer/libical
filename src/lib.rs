@@ -38,9 +38,9 @@ pub mod duration;
 pub mod property;
 pub mod time;
 pub mod timezone;
-pub mod utils;
 pub mod vcalendar;
 pub mod vevent;
+mod utils;
 
 #[cfg(test)]
 pub mod testing;
