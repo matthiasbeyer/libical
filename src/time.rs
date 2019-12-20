@@ -46,6 +46,8 @@ impl IcalTime {
         time.second = second;
         time.is_date = 0;
 
+        let time = unsafe { ical::icaltime_normalize(time) };
+
         IcalTime { time }
     }
 
