@@ -2,6 +2,7 @@ use std::ffi::{CStr, CString};
 use std::io;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
+use std::string::ToString;
 
 use super::IcalComponent;
 use super::IcalTime;
@@ -96,13 +97,6 @@ impl IcalVCalendar {
             ical::icalcomponent_normalize(self.get_ptr());
         }
         self
-    }
-
-    pub fn to_string(&self) -> String {
-        unsafe {
-            let ical_cstr = CStr::from_ptr(ical::icalcomponent_as_ical_string(self.get_ptr()));
-            ical_cstr.to_string_lossy().into_owned()
-        }
     }
 
     pub fn get_uid(&self) -> String {
@@ -355,6 +349,15 @@ impl IcalVCalendar {
             );
         }
         output
+    }
+}
+
+impl ToString for IcalVCalendar {
+    fn to_string(&self) -> String {
+        unsafe {
+            let ical_cstr = CStr::from_ptr(ical::icalcomponent_as_ical_string(self.get_ptr()));
+            ical_cstr.to_string_lossy().into_owned()
+        }
     }
 }
 
