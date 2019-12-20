@@ -299,4 +299,16 @@ mod tests {
         let time = IcalTime::utc();
         assert_eq!("20130102T010203Z", time.succ().to_string());
     }
+
+    #[test]
+    fn test_invalid_month() {
+        let time = IcalTime::floating_ymd(2000, 13, 1);
+        assert_eq!("20010101", time.to_string());
+    }
+
+    #[test]
+    fn test_invalid_day() {
+        let time = IcalTime::floating_ymd(2000, 12, 32);
+        assert_eq!("20010101", time.to_string());
+    }
 }
