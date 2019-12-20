@@ -20,7 +20,7 @@ pub fn datetime_from_str(datetime_str: &str) -> ParseResult<DateTime<Local>> {
     Ok(Local.from_local_datetime(naive_datetime).unwrap())
 }
 
-pub fn week_from_str_begin(date_str: &str) -> Result<Date<Local>, String> {
+fn week_from_str_begin(date_str: &str) -> Result<Date<Local>, String> {
     let now = Local::now();
     if date_str == "toweek" || date_str == "thisweek" {
         return Ok(Local.isoywd(now.year(), now.iso_week().week(), Weekday::Mon));
