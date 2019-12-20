@@ -312,4 +312,22 @@ mod tests {
         let time = IcalTime::floating_ymd(2000, 12, 32);
         assert_eq!("20010101", time.to_string());
     }
+
+    #[test]
+    fn test_invalid_hour() {
+        let time = IcalTime::floating_ymd(2000, 12, 31).and_hms(25, 0, 0);
+        assert_eq!("20010101T010000", time.to_string());
+    }
+
+    #[test]
+    fn test_invalid_minute() {
+        let time = IcalTime::floating_ymd(2000, 12, 31).and_hms(24, 61, 0);
+        assert_eq!("20010101T010100", time.to_string());
+    }
+
+    #[test]
+    fn test_invalid_second() {
+        let time = IcalTime::floating_ymd(2000, 12, 31).and_hms(24, 60, 61);
+        assert_eq!("20010101T010101", time.to_string());
+    }
 }
