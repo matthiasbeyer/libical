@@ -205,12 +205,12 @@ extern "C" fn recur_callback(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::testdata;
+    use crate::testing;
     use chrono::NaiveDate;
 
     #[test]
     fn test_get_all_properties() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
 
         let event = cal.get_principal_event();
         let props = event.get_properties_all();
@@ -219,7 +219,7 @@ mod tests {
 
     #[test]
     fn test_get_property_get_value() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY_ALLDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY_ALLDAY, None).unwrap();
         let event = cal.get_principal_event();
         let prop = event.get_properties_by_name("DTSTART");
 
@@ -234,7 +234,7 @@ mod tests {
 
     #[test]
     fn test_get_property_debug() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY_ALLDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY_ALLDAY, None).unwrap();
         let event = cal.get_principal_event();
         let prop = event
             .get_property(ical::icalproperty_kind_ICAL_DTSTART_PROPERTY)
@@ -245,7 +245,7 @@ mod tests {
 
     #[test]
     fn test_get_summary() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(
@@ -256,7 +256,7 @@ mod tests {
 
     #[test]
     fn test_get_summary_none() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_NO_SUMMARY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_NO_SUMMARY, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(None, event.get_summary());
@@ -264,7 +264,7 @@ mod tests {
 
     #[test]
     fn test_get_dtstart() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(
@@ -275,7 +275,7 @@ mod tests {
 
     #[test]
     fn test_get_dtstart_negative() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_NO_DTSTART, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_NO_DTSTART, None).unwrap();
         let event = cal.get_principal_event();
 
         assert!(event.get_dtstart().is_none());
@@ -283,7 +283,7 @@ mod tests {
 
     #[test]
     fn test_get_dtend() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(
@@ -294,7 +294,7 @@ mod tests {
 
     #[test]
     fn test_get_dtend_negative() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_NO_DTSTART, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_NO_DTSTART, None).unwrap();
         let event = cal.get_principal_event();
 
         assert!(event.get_dtend().is_none());
@@ -302,7 +302,7 @@ mod tests {
 
     #[test]
     fn test_get_duration_internal_normal() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(
@@ -313,7 +313,7 @@ mod tests {
 
     #[test]
     fn test_get_duration_normal() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(
@@ -324,7 +324,7 @@ mod tests {
 
     #[test]
     fn test_get_duration_inernal_startdate_only() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_DTSTART_ONLY_DATE, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_DTSTART_ONLY_DATE, None).unwrap();
         let event = cal.get_principal_event();
 
         assert!(event.get_duration_internal().is_none());
@@ -332,7 +332,7 @@ mod tests {
 
     #[test]
     fn test_get_duration_startdate_only() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_DTSTART_ONLY_DATE, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_DTSTART_ONLY_DATE, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(
@@ -343,7 +343,7 @@ mod tests {
 
     #[test]
     fn test_get_duration_internal_startdatetime_only() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_DTSTART_ONLY_DATETIME, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_DTSTART_ONLY_DATETIME, None).unwrap();
         let event = cal.get_principal_event();
 
         assert!(event.get_duration_internal().is_none());
@@ -351,7 +351,7 @@ mod tests {
 
     #[test]
     fn test_get_duration_startdatetime_only() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_DTSTART_ONLY_DATETIME, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_DTSTART_ONLY_DATETIME, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(Some(IcalDuration::from_seconds(0)), event.get_duration());
@@ -359,7 +359,7 @@ mod tests {
 
     #[test]
     fn test_get_description() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_ONE_MEETING, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_ONE_MEETING, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(
@@ -373,7 +373,7 @@ mod tests {
 
     #[test]
     fn test_get_description_none() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_MULTIDAY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_MULTIDAY, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(None, event.get_description());
@@ -381,7 +381,7 @@ mod tests {
 
     #[test]
     fn test_get_location() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_EVENT_ONE_MEETING, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_EVENT_ONE_MEETING, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(Some("LDB Lobby".to_string()), event.get_location());
@@ -389,7 +389,7 @@ mod tests {
 
     #[test]
     fn test_get_location_none() {
-        let cal = IcalVCalendar::from_str(testdata::TEST_NO_SUMMARY, None).unwrap();
+        let cal = IcalVCalendar::from_str(testing::data::TEST_NO_SUMMARY, None).unwrap();
         let event = cal.get_principal_event();
 
         assert_eq!(None, event.get_location());

@@ -43,10 +43,7 @@ pub mod vcalendar;
 pub mod vevent;
 
 #[cfg(test)]
-pub mod testdata;
-
-#[cfg(test)]
-pub mod testutils;
+pub mod testing;
 
 pub use crate::component::IcalComponent;
 pub use crate::duration::IcalDuration;
