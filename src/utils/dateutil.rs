@@ -4,7 +4,7 @@ use crate::utils::fileutil;
 use std::env;
 use std::path::PathBuf;
 
-pub fn date_from_str(date_str: &str) -> ParseResult<Date<Local>> {
+fn date_from_str(date_str: &str) -> ParseResult<Date<Local>> {
     if date_str == "today" || date_str == "now" {
         return Ok(Local::now().date());
     }
