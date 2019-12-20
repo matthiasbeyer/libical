@@ -1,3 +1,11 @@
+//! libical high level interface
+//!
+//! This library offers a high-level interface for the widely used libical. It relies upon the
+//! libical-sys crate, which is a thin rust layer over the libical C API.
+//! It provides a safe interface to libical that is rather lower-level, as well as convenience
+//! functionality build on this low-level interface for easy handling of icalendar data.
+//!
+
 #![warn(unused_extern_crates)]
 #![allow(clippy::redundant_closure)] // disable "redundant closure" lint
 
@@ -48,3 +56,4 @@ pub use crate::timezone::IcalTimeZone;
 pub use crate::vcalendar::IcalEventIter;
 pub use crate::vcalendar::IcalVCalendar;
 pub use crate::vevent::IcalVEvent;
+
