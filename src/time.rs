@@ -35,6 +35,7 @@ impl IcalTime {
             is_daylight: 0,
             zone: ::std::ptr::null(),
         };
+        let time = unsafe { ical::icaltime_normalize(time) };
         IcalTime { time }
     }
 
