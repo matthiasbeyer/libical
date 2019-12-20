@@ -5,6 +5,7 @@ use std::ops::Deref;
 use super::IcalTime;
 use crate::utils::dateutil;
 
+/// A type representing a timezone.
 pub struct IcalTimeZone {
     timezone: *mut ical::icaltimezone,
 }
