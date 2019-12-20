@@ -5,6 +5,9 @@ use std::fmt;
 use super::component::IcalComponent;
 use crate::ical;
 
+/// A property in the ical data
+///
+/// This type represents a single property (name + value).
 pub struct IcalProperty<'a> {
     pub ptr: *mut ical::icalproperty,
     _parent: &'a dyn IcalComponent,
