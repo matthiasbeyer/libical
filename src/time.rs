@@ -9,20 +9,27 @@ use std::fmt::{Display, Error, Formatter};
 use std::ops::{Add, Deref};
 use std::str::FromStr;
 
+/// Time type
+///
+/// A type representing "time"
 #[derive(Clone, Debug)]
 pub struct IcalTime {
     time: ical::icaltimetype,
 }
 
 impl IcalTime {
+
+    /// Get an IcalTime object that represents UTC now
     pub fn utc() -> Self {
         dateutil::now().into()
     }
 
+    /// Get an IcalTime object that represents the current time in the local timezone.
     pub fn local() -> Self {
         dateutil::now().with_timezone(&Local).into()
     }
 
+    /// Get an IcalTime object that represents a specific day.
     pub fn floating_ymd(year: i32, month: i32, day: i32) -> Self {
         let time = ical::icaltimetype {
             year,
@@ -38,6 +45,8 @@ impl IcalTime {
         IcalTime { time }
     }
 
+    /// Get an IcalTime object that is the same as the object this function is called on, but with
+    /// hour, minute and second set
     pub fn and_hms(&self, hour: i32, minute: i32, second: i32) -> Self {
         let mut time = self.time;
         time.hour = hour;
@@ -48,6 +57,7 @@ impl IcalTime {
         IcalTime { time }
     }
 
+    /// Get an IcalTime object based on a timestamp
     pub fn from_timestamp(timestamp: i64) -> Self {
         let _lock = TZ_MUTEX.lock();
         let utc = IcalTimeZone::utc();
@@ -56,21 +66,25 @@ impl IcalTime {
         IcalTime { time }
     }
 
+    /// Get the timestamp representation of the IcalTime object
     pub fn timestamp(&self) -> i64 {
         let _lock = TZ_MUTEX.lock();
         unsafe { ical::icaltime_as_timet_with_zone(self.time, self.time.zone) }
     }
 
+    /// Get whether the IcalTime object is a date object
     pub fn is_date(&self) -> bool {
         self.time.is_date != 0
     }
 
+    /// Get the IcalTime object as a date object
     pub fn as_date(&self) -> IcalTime {
         let mut time = self.time;
         time.is_date = 1;
         IcalTime { time }
     }
 
+    /// Get the timezone for the IcalTime object
     pub fn get_timezone(&self) -> Option<IcalTimeZone> {
         if self.time.zone.is_null() {
             return None;
@@ -79,6 +93,7 @@ impl IcalTime {
         Some(IcalTimeZone::from_ptr_copy(tz_ptr))
     }
 
+    /// Get a new IcalTime object with a different timezone
     pub fn with_timezone(&self, timezone: &IcalTimeZone) -> IcalTime {
         let _lock = TZ_MUTEX.lock();
         let mut time = unsafe { ical::icaltime_convert_to_zone(self.time, **timezone) };
@@ -87,6 +102,7 @@ impl IcalTime {
         IcalTime { time }
     }
 
+    /// Get a new IcalTime object with the day before the day of the current object
     pub fn pred(&self) -> IcalTime {
         let mut time = self.time;
         time.day -= 1;
@@ -94,6 +110,7 @@ impl IcalTime {
         IcalTime { time }
     }
 
+    /// Get a new IcalTime object with the day after the day of the current object
     pub fn succ(&self) -> IcalTime {
         let mut time = self.time;
         time.day += 1;
