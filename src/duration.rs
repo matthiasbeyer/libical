@@ -5,17 +5,23 @@ use std::fmt::{Display, Error, Formatter};
 use std::ops::{Add, Deref};
 use std::str::FromStr;
 
+/// Duration type
+///
+/// A type that represents a duration of time
 #[derive(Clone, Debug)]
 pub struct IcalDuration {
     duration: ical::icaldurationtype,
 }
 
 impl IcalDuration {
+
+    /// Convert a number of seconds to an IcalDuration
     pub fn from_seconds(seconds: i32) -> IcalDuration {
         let duration = unsafe { ical::icaldurationtype_from_int(seconds) };
         IcalDuration { duration }
     }
 
+    /// Get the number of seconds the IcalDuration represents
     pub fn to_seconds(&self) -> i32 {
         unsafe { ical::icaldurationtype_as_int(self.duration) }
     }
