@@ -159,12 +159,6 @@ impl Add<IcalDuration> for IcalTime {
     }
 }
 
-impl<T: Into<IcalTime> + Clone> From<&T> for IcalTime {
-    fn from(time: &T) -> IcalTime {
-        time.clone().into()
-    }
-}
-
 impl From<DateTime<Local>> for IcalTime {
     fn from(time: DateTime<Local>) -> IcalTime {
         let timestamp = time.timestamp();
