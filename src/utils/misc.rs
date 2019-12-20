@@ -1,4 +1,3 @@
-use chrono::prelude::*;
 use std::fmt::Display;
 use std::time;
 
@@ -17,23 +16,6 @@ pub fn joinlines(first: &str, second: &str) -> String {
 
 pub fn format_duration(duration: &time::Duration) -> impl Display {
     duration.as_millis()
-}
-
-pub fn get_bucket_for_date(date: Date<Local>) -> String {
-    date.format("%G-W%V").to_string()
-}
-
-#[cfg(not(test))]
-pub fn make_new_uid() -> String {
-    use uuid::Uuid;
-
-    let suffix = "@khaleesi";
-    format!("{}{}", Uuid::new_v4().to_hyphenated_ref(), suffix)
-}
-
-#[cfg(test)]
-pub fn make_new_uid() -> String {
-    "11111111-2222-3333-4444-444444444444@khaleesi".to_string()
 }
 
 #[cfg(test)]
