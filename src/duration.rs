@@ -25,6 +25,11 @@ impl IcalDuration {
     pub fn to_seconds(&self) -> i32 {
         unsafe { ical::icaldurationtype_as_int(self.duration) }
     }
+
+    pub fn as_string(&self) -> String {
+        let cstr = unsafe { CStr::from_ptr(ical::icaldurationtype_as_ical_string(self.duration)) };
+        cstr.to_string_lossy().to_string()
+    }
 }
 
 impl Deref for IcalDuration {
