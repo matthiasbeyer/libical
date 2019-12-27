@@ -120,6 +120,11 @@ impl IcalTime {
         let time = unsafe { ical::icaltime_normalize(time) };
         IcalTime { time }
     }
+
+    pub fn as_string(&self) -> String {
+        let cstr = unsafe { CStr::from_ptr(ical::icaltime_as_ical_string(self.time)) };
+        cstr.to_string_lossy().to_string()
+    }
 }
 
 impl Deref for IcalTime {
